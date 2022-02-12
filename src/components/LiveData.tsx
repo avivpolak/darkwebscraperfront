@@ -36,7 +36,7 @@ const LiveData = () => {
                             <Card.Header>
                                 <Card.Title as="h4">Live Data </Card.Title>
                                 <p className="card-category">
-                            
+                                    {/* lastUpdated: {lastUpdate} */}
                                 </p>
                             </Card.Header>
                             <Card.Body className="table-full-width table-responsive px-0">
