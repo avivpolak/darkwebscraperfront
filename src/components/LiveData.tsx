@@ -15,53 +15,20 @@ import {
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useInterval } from "../hooks/useInterval";
-type Item = {
-    title: string;
-    labels: string;
-    author: string;
-    date: string;
-};
+import { useStore } from "react-redux";
+import { Paste } from "../features/paste/pasteSlice";
+import Header from "./Header";
+
 const defaultData = [
     { title: "string", labels: "string", author: "string", date: "string" },
 ];
 
 const LiveData = () => {
-    const [data, setData] = useState(defaultData);
-    const [lastUpdate, setLastUpdate] = useState(new Date().toLocaleDateString());
-    const [countAdded, setCountAdded] = useState(0);
-
-    useInterval(() => {
-        updateData();
-     
-      }, 10000);
-    const updateData = async () => {
-        try {
-            const response = await axios.get(`http://localhost:3000`);
-            if (response.data.data !== data) {
-                setCountAdded(
-                    response.data.data.filter((item:any) => !data.includes(item))
-                        .length
-                );
-                console.log("added,",countAdded)
-                setData(response.data.data);  
-                setLastUpdate(new Date().toLocaleTimeString());
-            }
-        } catch (err) {
-            setData([]);
-        }
-    };
-    // useEffect(() => {
-    //     // Update the document title using the browser API
-    //     updateData();
-    // }, []);
-    setInterval(() => {
-        updateData();
-        setLastUpdate(new Date().toLocaleTimeString());
-    }, 10000);
-
-
+    const store = useStore().getState(); 
+    const pastes = store.pasteReducer
     return (
         <>
+           <Header />
             <Container fluid>
                 <Row>
                     <Col md="12">
@@ -69,7 +36,7 @@ const LiveData = () => {
                             <Card.Header>
                                 <Card.Title as="h4">Live Data </Card.Title>
                                 <p className="card-category">
-                                    lastUpdated: {lastUpdate}
+                            
                                 </p>
                             </Card.Header>
                             <Card.Body className="table-full-width table-responsive px-0">
@@ -83,7 +50,7 @@ const LiveData = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data.map((item, i) => (
+                                        {pastes.map((item:Paste, i:number) => (
                                             <tr key={i}>
                                                 <td>{item.title}</td>
                                                 <td>{item.labels}</td>

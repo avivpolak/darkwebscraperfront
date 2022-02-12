@@ -14,6 +14,7 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import Header from "./Header";
 const defaultConfig = {
     name: "Stronghold",
     url: "http://strongerw2ise74v3duebgsvug4mehyhlpa7f6kfwnas7zofs3kov7yd.onion/all",
@@ -42,12 +43,12 @@ const CustomScrape = () => {
     const [data, setData] = useState([{param1:""} as Item,{param1:""} as Item]);
     const getScrapeResults = async (config: any) => {
         try {
-            console.log(config);
+          
             const response = await axios.post(
                 `http://localhost:3000/custom`,
                 config
             );
-            console.log(response);
+         
             if (response.data) {
                 setData(response.data.data);
             }
@@ -64,6 +65,8 @@ const CustomScrape = () => {
     };
     return (
         <>
+        <Header />
+
             <Container fluid>
                 <Row>
                     <Col md="8">
