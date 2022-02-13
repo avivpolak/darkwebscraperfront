@@ -1,9 +1,34 @@
 /** @format */
 import { createSlice } from "@reduxjs/toolkit";
+import { Notyf } from "notyf";
 import { Alert } from "react-bootstrap";
 import { isAlert, isAlerts } from "../../typeScript/typeGuards";
 import { Paste } from "../paste/pasteSlice";
-
+const notyf = new Notyf({
+    types: [
+        {
+            type: "error",
+            background: "indianred",
+            duration: 4000,
+            dismissible: true,
+            position: { x: "right", y: "top" },
+        },
+        {
+            type: "success",
+            background: "green",
+            duration: 4000,
+            dismissible: true,
+            position: { x: "right", y: "top" },
+        },
+        {
+            type: "alert",
+            background: "yellow",
+            duration: 4000,
+            dismissible: true,
+            position: { x: "right", y: "top" },
+        },
+    ],
+});
 export type Alerts = Alert[];
 export interface Alert {
     paste: Paste;
@@ -23,6 +48,7 @@ export const alertsSlice = createSlice({
             console.log(newAlert)
             if (isAlert(newAlert) && !isInAlerts(state,newAlert.paste.title)) {
                 state.push(newAlert);
+                notyf.error(`new alert!!!`);
             }
         },
         remove: (state, action) => {

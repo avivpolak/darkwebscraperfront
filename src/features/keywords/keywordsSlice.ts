@@ -5,7 +5,7 @@ import { isKeywords } from "../../typeScript/typeGuards";
 
 export type Keywords = string[];
 
-const initialState: Keywords = ["PORN"];
+const initialState: Keywords = [];
 export const keywordsSlice = createSlice({
     name: "keywords",
     initialState,

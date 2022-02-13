@@ -33,6 +33,13 @@ function App() {
                 dismissible: true,
                 position: { x: "right", y: "top" },
             },
+            {
+                type: "alert",
+                background: "yellow",
+                duration: 4000,
+                dismissible: true,
+                position: { x: "right", y: "top" },
+            },
         ],
     });
 
@@ -51,6 +58,7 @@ function App() {
                     } else {
                        
                         if (value.toLowerCase().includes(keyword.toLowerCase()) ) {
+                          
                             dispatch(
                                 addAlert({ isFullMatch: true, paste, keyword })
                             );
