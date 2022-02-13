@@ -8,11 +8,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useStore } from "react-redux";
 import { useInterval } from "./hooks/useInterval";
-import { add } from "./features/paste/pasteSlice";
+import { add, Paste } from "./features/paste/pasteSlice";
 import { Notyf } from "notyf";
 import "notyf/notyf.min.css";
 import Alerts from "./components/Alerts";
 import KeyWords from "./components/KeyWords";
+import { objectTraps } from "immer/dist/internal";
+import { addAlert } from "./features/alerts/alertsSlice";
 
 function App() {
     const notyf = new Notyf({
@@ -40,7 +42,24 @@ function App() {
     const [lastUpdate, setLastUpdate] = useState(
         new Date().toLocaleDateString()
     );
-
+    const searchForAlert = (data: Paste[]) => {
+        const keyWords = store.KeyWordsReducer;
+        for (let paste of data) {
+            for (let value of Object.values(paste)) {
+                for (let keyword of keyWords) {
+                    if (Array.isArray(value)) {
+                    } else {
+                       
+                        if (value.toLowerCase().includes(keyword.toLowerCase()) ) {
+                            dispatch(
+                                addAlert({ isFullMatch: true, paste, keyword })
+                            );
+                        }
+                    }
+                }
+            }
+        }
+    };
     const [pasteCounter, setPasteCounter] = useState(0);
 
     useInterval(() => {
@@ -52,6 +71,7 @@ function App() {
             setPasteCounter(response.data.data.length);
             dispatch(add(response.data.data));
             setLastUpdate(new Date().toLocaleTimeString());
+            searchForAlert(response.data.data);
         } catch (err) {}
     };
 

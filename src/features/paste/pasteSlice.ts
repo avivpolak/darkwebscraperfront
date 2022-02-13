@@ -27,9 +27,21 @@ export const pasteSlice = createSlice({
                 }
             });
         },
+        remove: (state, action) => {
+            const newPastes: Paste[] = action.payload;
+            const diff = newPastes.filter(
+                (newPaste) =>
+                    !state.some((paste) => paste.title === newPaste.title)
+            );
+            diff.forEach((item) => {
+                if (!state.includes(item)) {
+                    state.push(item);
+                }
+            });
+        },
     },
 });
 
-export const { add } = pasteSlice.actions;
+export const { add,remove } = pasteSlice.actions;
 export const selectEquipment = (state: any) => state.pasteSlice;
 export default pasteSlice.reducer;

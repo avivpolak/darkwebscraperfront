@@ -14,11 +14,11 @@ import {
     Table,
 } from "react-bootstrap";
 import axios from "axios";
-import { useNavigate } from "react-router";
 import Header from "./Header";
 import MyLoader from "./StyledLoader";
 
 const defaultConfig = {
+    
     name: "Stronghold",
     url: "http://strongerw2ise74v3duebgsvug4mehyhlpa7f6kfwnas7zofs3kov7yd.onion/all",
     useTor: true,
@@ -36,6 +36,7 @@ const defaultConfig = {
     param4Name: "date",
     param4Selector: ".col-sm-6",
     param4REGEX: "\\d+\\s[a-zA-Z]+\\s\\d+,\\s\\d+:\\d+:\\d+\\s[a-zA-Z]+",
+    save:false
 };
 interface Item {
     [key: string]: string;
@@ -71,7 +72,7 @@ const CustomScrape = () => {
     const handleChange = (event: any) => {
         let value = event.currentTarget.value;
         const key = event.currentTarget.id;
-        if (key === "useTor") value = event.currentTarget.checked;
+        if (key === "useTor" || key === "save") value = event.currentTarget.checked;
         setConfig({ ...config, [key]: value });
     };
     return (
@@ -153,6 +154,7 @@ const CustomScrape = () => {
                                                         required
                                                         onChange={handleChange}
                                                         id="maxUrls"
+                                                        max={250}
                                                     ></Form.Control>
                                                 </Form.Group>
                                             </Col>
@@ -351,6 +353,7 @@ const CustomScrape = () => {
                                                 </Form.Group>
                                             </Col>
                                         </Row>
+                                        <Row>
                                         <Button
                                             className="btn-fill pull-right"
                                             type="submit"
@@ -358,6 +361,17 @@ const CustomScrape = () => {
                                         >
                                             Scrape
                                         </Button>
+                                        <Col className="pl-1" md="4">
+                                                <Form.Check
+                                                    defaultChecked={
+                                                        config.save
+                                                    }
+                                                    onChange={handleChange}
+                                                    label={`save to server configurations`}
+                                                    id={`save`}
+                                                />
+                                            </Col>
+                                        </Row>
                                         <div className="clearfix"></div>
                                     </Form>
                                 </Card.Body>
