@@ -6,7 +6,7 @@ import { useRef } from "react";
 export default function SearchBar({setSearchWord}:{setSearchWord : Function}) {
     const inputEl:any = useRef(null);
   return (
-    <div className="center">
+    <div className="center margin">
     <MDBCol md="6">
         <MDBInput
             ref={inputEl}

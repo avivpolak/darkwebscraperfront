@@ -80,9 +80,9 @@ const CustomScrape = () => {
 
                 <Header />
                 <Container fluid>
-                <Row>
+                <Row >
                     <Col md="12">
-                <div className="form"></div>
+                <div className="form margin"></div>
                
                             <Card>
                                 <Card.Header>

@@ -11,6 +11,8 @@ import { useInterval } from "./hooks/useInterval";
 import { add } from "./features/paste/pasteSlice";
 import { Notyf } from "notyf";
 import "notyf/notyf.min.css";
+import Alerts from "./components/Alerts";
+import KeyWords from "./components/KeyWords";
 
 function App() {
     const notyf = new Notyf({
@@ -71,6 +73,8 @@ function App() {
                     <Route path="/Dashboard" element={<Dashboard />} />
                     <Route path="/CustomScrape" element={<CustomScrape />} />
                     <Route path="/LiveData" element={<LiveData />} />
+                    <Route path="/Alerts" element={<Alerts />} />
+                    <Route path="/KeyWords" element={<KeyWords />} />
                 </Routes>
             </BrowserRouter>
         </div>
