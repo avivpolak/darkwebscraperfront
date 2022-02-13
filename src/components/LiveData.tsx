@@ -18,17 +18,24 @@ import { useInterval } from "../hooks/useInterval";
 import { useStore } from "react-redux";
 import { Paste } from "../features/paste/pasteSlice";
 import Header from "./Header";
-
-const defaultData = [
-    { title: "string", labels: "string", author: "string", date: "string" },
-];
+import SearchBar from "./SearchBar";
 
 const LiveData = () => {
-    const store = useStore().getState(); 
-    const pastes = store.pasteReducer
+    const [searchWord, setSearchWord] = useState("");
+    const store = useStore().getState();
+    const [data, setData] = useState(store.pasteReducer);
+
+    useEffect(() => {
+        console.log(searchWord)
+        setData(
+            store.pasteReducer.filter((paste: Paste) => filterByQuery(paste, searchWord))
+        );
+    }, [searchWord]);
+
     return (
         <>
-           <Header />
+            <Header />
+            <SearchBar setSearchWord={setSearchWord} />
             <Container fluid>
                 <Row>
                     <Col md="12">
@@ -50,7 +57,7 @@ const LiveData = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {pastes.map((item:Paste, i:number) => (
+                                        {data.map((item: Paste, i: number) => (
                                             <tr key={i}>
                                                 <td>{item.title}</td>
                                                 <td>{item.labels}</td>
@@ -70,3 +77,19 @@ const LiveData = () => {
 };
 
 export default LiveData;
+
+const filterByQuery = (paste: Paste, query: string) => {
+    query = query.toLowerCase();
+    if (
+        paste.author.toLowerCase().includes(query) ||
+        paste.title.toLowerCase().includes(query) ||
+        filterByLabels(paste.labels, query) ||
+        paste.date.toLowerCase().includes(query)
+    ) {
+        return true;
+    }
+    return false;
+};
+const filterByLabels = (labels: string[], query: string) => {
+    return labels.length > 0 && labels[0].toLowerCase().includes(query);
+};

@@ -2,27 +2,32 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface Paste {
-    [key: string]: string;
+    labels: string[];
+    title: string;
+    author: string;
+    date: string;
 }
 // const defaultData = [
 //     { title: "string", labels: "string", author: "string", date: "string" },
 // ];
 const initialState: Paste[] = [];
 export const pasteSlice = createSlice({
-  name: "paste",
-  initialState,
-  reducers: {
-      add: (state, action) => {
-          const newPastes: Paste[] = action.payload;
-        const diff = newPastes.filter(
-            (newPaste) => !state.some((paste) => paste.title === newPaste.title))
+    name: "paste",
+    initialState,
+    reducers: {
+        add: (state, action) => {
+            const newPastes: Paste[] = action.payload;
+            const diff = newPastes.filter(
+                (newPaste) =>
+                    !state.some((paste) => paste.title === newPaste.title)
+            );
             diff.forEach((item) => {
-              if (!state.includes(item)) {
-                  state.push(item);
-              }
-          });
-      },
-  },
+                if (!state.includes(item)) {
+                    state.push(item);
+                }
+            });
+        },
+    },
 });
 
 export const { add } = pasteSlice.actions;

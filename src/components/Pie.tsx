@@ -26,7 +26,7 @@ function Pie(props: Props) {
             style={{
                 fontFamily:
                     '"Nunito Sans", -apple-system, Helvetica, Arial, sans-serif',
-                fontSize: "1.5px",
+                fontSize: "2px",
             }}
             data={data}
             radius={PieChart.defaultProps.radius - 35}
@@ -39,7 +39,7 @@ function Pie(props: Props) {
             }
             labelPosition={170 - lineWidth / 2}
             labelStyle={{
-                fill: "#000",
+                fill: "#fff",
                 opacity: 0.75,
                 pointerEvents: "none",
             }}
