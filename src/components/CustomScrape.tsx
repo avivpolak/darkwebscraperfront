@@ -22,7 +22,7 @@ const defaultConfig = {
     name: "Stronghold",
     url: "http://strongerw2ise74v3duebgsvug4mehyhlpa7f6kfwnas7zofs3kov7yd.onion/all",
     useTor: true,
-    maxUrls: 243,
+    maxUrls: 50,
     allPostsSelector: ".col-sm-12",
     param1Name: "title",
     param1Selector: "h4",
